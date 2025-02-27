@@ -2,7 +2,7 @@ local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main
 local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
 local ThemeManager = loadstring(game:HttpGet(repo .. 'addons/ThemeManager.lua'))()
 local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))()
-local Window = Library:CreateWindow({ Title = '                     $$                     ', AutoShow = true, TabPadding = 15, MenuFadeTime = 0.2 })
+local Window = Library:CreateWindow({ Title = '                     $K4JZ$        ', AutoShow = true, TabPadding = 15, MenuFadeTime = 0.2 })
 local Tabs = { Main = Window:AddTab('Main'), Character = Window:AddTab('Character'), Visuals = Window:AddTab('Visuals'), Misc = Window:AddTab('Misc'), Players = Window:AddTab('Players'), ['UI Settings'] = Window:AddTab('UI Settings') }
 local GunMods = Tabs.Main:AddRightGroupbox('Gun Mods')
 local KillAura = Tabs.Main:AddRightGroupbox('Combat')
@@ -577,15 +577,15 @@ end)
 
 local killSayEnabled = false
 local killSayMessages = {
-    "mad.lol is a free script and u die to it..", 
-    "Must be hard without mad.lol 💔", 
-    "Why aim when mad.lol does it for you?",
-    "Bros not on mad.lol already 😂",
+    "k3JZ is a free script and u die to it..", 
+    "Must be hard without k3JZ 💔", 
+    "Why aim when k3JZ does it for you?",
+    "Bros not on k3JZ already 😂",
     "Cant be me icl",
-    "cant win a hvh? maybe try /madlolhvh",
-    "if u wanna win hop in /madlolhvh",
-    "hey come on if u cant win get mad . lol",
-    "how to win a hvh? step 1 get mad . lol"
+    "cant win a hvh? maybe try k3JZ",
+    "if u wanna win hop in k3JZ",
+    "hey come on if u cant win get k3JZ",
+    "how to win a hvh? step 1 get k3JZ"
 }
 
 TargetingGroup:AddToggle("killsay", { 
@@ -4211,7 +4211,7 @@ getgenv().PlayerActions:AddButton('Execute Action', function()
                 voidTarget(targetPlayer)
             end
         else
-            Library:Notify("Equip a tool to use this function. | Mad.lol", 5)
+            Library:Notify("Equip a tool to use this function. | K3JZ", 5)
         end
     end
 end)
@@ -4638,52 +4638,3 @@ SaveManager:SetFolder('MaddieHack/configs')
 SaveManager:BuildConfigSection(Tabs['UI Settings'])
 ThemeManager:ApplyToTab(Tabs['UI Settings'])
 
-Library:SetWatermarkVisibility(true)
-
-local StatsService = game:GetService("Stats")
-local MarketplaceService = game:GetService("MarketplaceService")
-
-local FrameTimer = tick()
-local FrameCounter = 0
-local FPS = 60
-local StartTime = tick()
-
-local function getExecutor()
-    if syn then return "Synapse X"
-    elseif secure_call then return "ScriptWare"
-    elseif identifyexecutor then return identifyexecutor()
-    else return "Unknown" end
-end
-
-local function getGameName(placeId)
-    local success, result = pcall(function()
-        return MarketplaceService:GetProductInfo(placeId).Name
-    end)
-    return success and result or "Unknown Game"
-end
-
-local WatermarkConnection = RunService.RenderStepped:Connect(function()
-    FrameCounter += 1
-    if (tick() - FrameTimer) >= 1 then
-        FPS = FrameCounter
-        FrameTimer = tick()
-        FrameCounter = 0
-    end
-
-    local Ping = math.floor(StatsService.Network.ServerStatsItem["Data Ping"]:GetValue())
-    local Executor = getExecutor()
-    local Uptime = math.floor(tick() - StartTime)
-    local UptimeFormatted = string.format("%02d:%02d", math.floor(Uptime / 60), Uptime % 60)
-    local GameName = getGameName(game.PlaceId)
-
-    Library:SetWatermark(("[ Mad.lol ] | $ Beta $ |  %s | %s (%d) | Uptime: %s | FPS %d | %d ms"):format(
-        Executor, GameName, game.PlaceId, UptimeFormatted, math.floor(FPS), Ping
-    ))
-end)
-
-
-Library:OnUnload(function()
-    WatermarkConnection:Disconnect()
-    print('Unloaded!')
-    Library.Unloaded = true
-end)
