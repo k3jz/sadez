@@ -7,8 +7,6 @@ local Tabs = { Main = Window:AddTab('Main'), Character = Window:AddTab('Characte
 local GunMods = Tabs.Main:AddRightGroupbox('Gun Mods')
 local KillAura = Tabs.Main:AddRightGroupbox('Combat')
 
-game.Players.LocalPlayer.Character.Humanoid.Health = 0
-
 local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('Menu')
 
 local LocalPlayer = game:GetService('Players').LocalPlayer
@@ -4576,52 +4574,6 @@ MenuGroup:AddToggle('KeybindListToggle', {
         Library.KeybindFrame.Visible = state
     end
 })
-
-getgenv().vu = game:GetService("VirtualUser")
-getgenv().isAntiAfkEnabled = false
-getgenv().antiAfkConnection = nil
-
-MenuGroup:AddToggle('AntiAFKToggle', {
-    Text = 'Anti-AFK',
-    Default = false,
-    Callback = function(state)
-        getgenv().isAntiAfkEnabled = state
-        if getgenv().isAntiAfkEnabled then
-            getgenv().antiAfkConnection = game:GetService("Players").LocalPlayer.Idled:Connect(function()
-                getgenv().vu:CaptureController()
-                getgenv().vu:ClickButton2(Vector2.new())
-            end)
-        else
-            if getgenv().antiAfkConnection then
-                getgenv().antiAfkConnection:Disconnect()
-                getgenv().antiAfkConnection = nil
-            end
-        end
-    end
-})
-
-
-MenuGroup:AddButton('Copy Job ID', function()
-    setclipboard(game.JobId)
-end)
-
-MenuGroup:AddButton('Copy JS Join Script', function()
-    local jsScript = 'Roblox.GameLauncher.joinGameInstance(' .. game.PlaceId .. ', "' .. game.JobId .. '")'
-    setclipboard(jsScript)
-end)
-
-MenuGroup:AddInput('JobIdInput', {
-    Default = '',
-    Numeric = false,
-    Finished = true,
-    Text = '..JobId..',
-    Tooltip = 'Enter a Job ID to join a specific server',
-    Placeholder = 'Enter Job ID here',
-    Callback = function(Value)
-        game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, Value, game:GetService('Players').LocalPlayer)
-    end
-})
-
 
 MenuGroup:AddButton('Rejoin Server', function()
     game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer)
