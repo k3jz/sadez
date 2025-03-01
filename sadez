@@ -370,6 +370,74 @@ local function checkAmmoAndBuy()
     end
 end
 
+getgenv().hitsounds = {
+    ["Bubble"] = "rbxassetid://6534947588",
+    ["Lazer"] = "rbxassetid://130791043",
+    ["Pick"] = "rbxassetid://1347140027",
+    ["Pop"] = "rbxassetid://198598793",
+    ["Rust"] = "rbxassetid://1255040462",
+    ["Sans"] = "rbxassetid://3188795283",
+    ["Fart"] = "rbxassetid://130833677",
+    ["Big"] = "rbxassetid://5332005053",
+    ["Vine"] = "rbxassetid://5332680810",
+    ["UwU"] = "rbxassetid://8679659744",
+    ["Bruh"] = "rbxassetid://4578740568",
+    ["Skeet"] = "rbxassetid://5633695679",
+    ["Neverlose"] = "rbxassetid://6534948092",
+    ["Fatality"] = "rbxassetid://6534947869",
+    ["Bonk"] = "rbxassetid://5766898159",
+    ["Minecraft"] = "rbxassetid://5869422451",
+    ["Gamesense"] = "rbxassetid://4817809188",
+    ["RIFK7"] = "rbxassetid://9102080552",
+    ["Bamboo"] = "rbxassetid://3769434519",
+    ["Crowbar"] = "rbxassetid://546410481",
+    ["Weeb"] = "rbxassetid://6442965016",
+    ["Beep"] = "rbxassetid://8177256015",
+    ["Bambi"] = "rbxassetid://8437203821",
+    ["Stone"] = "rbxassetid://3581383408",
+    ["Old Fatality"] = "rbxassetid://6607142036",
+    ["Click"] = "rbxassetid://8053704437",
+    ["Ding"] = "rbxassetid://7149516994",
+    ["Snow"] = "rbxassetid://6455527632",
+    ["Laser"] = "rbxassetid://7837461331",
+    ["Mario"] = "rbxassetid://2815207981",
+    ["Steve"] = "rbxassetid://4965083997",
+    ["Call of Duty"] = "rbxassetid://5952120301",
+    ["Bat"] = "rbxassetid://3333907347",
+    ["TF2 Critical"] = "rbxassetid://296102734",
+    ["Saber"] = "rbxassetid://8415678813",
+    ["Baimware"] = "rbxassetid://3124331820",
+    ["Osu"] = "rbxassetid://7149255551",
+    ["TF2"] = "rbxassetid://2868331684",
+    ["Slime"] = "rbxassetid://6916371803",
+    ["Among Us"] = "rbxassetid://5700183626",
+    ["One"] = "rbxassetid://7380502345"
+}
+getgenv().selectedHitsound = "Bubble"
+getgenv().hitsoundEnabled = false
+getgenv().hitsoundVolume = 1
+
+function playHitsound()
+    if getgenv().hitsoundEnabled then
+        local sound = Instance.new("Sound")
+        sound.SoundId = getgenv().hitsounds[getgenv().selectedHitsound]
+        sound.Volume = getgenv().hitsoundVolume
+        sound.Parent = workspace
+        sound:Play()
+        sound.Ended:Connect(function()
+            sound:Destroy()
+        end)
+    end
+end
+
+GunMods:AddToggle('hstoggle', {
+    Text = 'Hitsounds',
+    Default = false,
+    Callback = function(state)
+        getgenv().Resolution = {
+    [" "] = 0.65
+}
+
 local Camera = workspace.CurrentCamera
 if getgenv().gg_scripters == nil then
     game:GetService("RunService").RenderStepped:Connect(
@@ -379,6 +447,26 @@ if getgenv().gg_scripters == nil then
     )
 end
 getgenv().gg_scripters = " "
+    end
+})
+
+GunMods:AddDropdown('hs', {
+    Text = 'Select Hitsound',
+    Values = {"Bubble", "Lazer", "Pick", "Pop", "Rust", "Sans", "Fart", "Big", "Vine", "UwU", "Bruh", "Skeet", "Neverlose", "Fatality", "Bonk", "Minecraft", "Gamesense", "RIFK7", "Bamboo", "Crowbar", "Weeb", "Beep", "Bambi", "Stone", "Old Fatality", "Click", "Ding", "Snow", "Laser", "Mario", "Steve", "Call of Duty", "Bat", "TF2 Critical", "Saber", "Baimware", "Osu", "TF2", "Slime", "Among Us", "One"},
+    Default = "Bubble",
+    Callback = function(value)
+        getgenv().selectedHitsound = value
+    end
+})
+
+GunMods:AddSlider('hsvolume', {
+    Text = 'Volume',
+    Default = 1,
+    Min = 1,
+    Max = 5,
+    Rounding = 2,
+    Callback = function(value)
+        getgenv().hitsoundVolume = value
     end
 })
 
@@ -1127,6 +1215,13 @@ end
 -- Function to create ESP for a player
 local function CreateESP(player)
     DestroyESP(player)
+
+    local box = Drawing.new("Square")
+    box.Thickness = 1
+    box.Filled = false
+    box.Color = getgenv().espColor
+    box.Visible = false
+    box.ZIndex = 1
 
     local boxOutline = Drawing.new("Square")
     boxOutline.Thickness = 3
@@ -4494,4 +4589,3 @@ ThemeManager:SetFolder('MaddieHack')
 SaveManager:SetFolder('MaddieHack/configs')
 SaveManager:BuildConfigSection(Tabs['UI Settings'])
 ThemeManager:ApplyToTab(Tabs['UI Settings'])
-
