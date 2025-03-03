@@ -1040,14 +1040,6 @@ end
 local function CreateESP(player)
     DestroyESP(player)
 
-   
-    local boxOutline = Drawing.new("Square")
-    boxOutline.Thickness = 3
-    boxOutline.Filled = false
-    boxOutline.Color = Color3.new(0, 0, 0)
-    boxOutline.Visible = false
-    boxOutline.ZIndex = 0
-
     local username = Drawing.new("Text")
     username.Size = getgenv().nameTextSize
     username.Center = true
@@ -1110,7 +1102,6 @@ local function CreateESP(player)
     penisLine.ZIndex = 1
 
     ESPObjects[player] = {
-        Box = box,
         BoxOutline = boxOutline,
         Username = username,
         Distance = distance,
