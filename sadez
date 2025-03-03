@@ -1040,20 +1040,6 @@ end
 local function CreateESP(player)
     DestroyESP(player)
 
-    local box = Drawing.new("Square")
-    box.Thickness = 1
-    box.Filled = false
-    box.Color = getgenv().espColor
-    box.Visible = false
-    box.ZIndex = 1
-
-    local boxOutline = Drawing.new("Square")
-    boxOutline.Thickness = 3
-    boxOutline.Filled = false
-    boxOutline.Color = Color3.new(0, 0, 0)
-    boxOutline.Visible = false
-    boxOutline.ZIndex = 0
-
     local username = Drawing.new("Text")
     username.Size = getgenv().nameTextSize
     username.Center = true
@@ -1116,7 +1102,6 @@ local function CreateESP(player)
     penisLine.ZIndex = 1
 
     ESPObjects[player] = {
-        Box = box,
         BoxOutline = boxOutline,
         Username = username,
         Distance = distance,
@@ -1958,53 +1943,6 @@ uhhh:AddToggle('CFrameSpeedToggle', {
     Callback = function(state)
         if game:GetService("UserInputService"):GetFocusedTextBox() then return end
         if getgenv().cframeSpeedEnabled then getgenv().cframeSpeedKeybindActive = state end
-    end,
-})
-
-uhhh:AddToggle('WalkSpeedToggle', {
-    Text = 'WalkSpeed',
-    Default = false,
-    Callback = function(state)
-        getgenv().walkSpeedEnabled = state
-        if not state then getgenv().walkSpeedKeybindActive = false end
-    end,
-}):AddKeyPicker('WalkSpeedKeybind', {
-    Default = 'T',
-    Text = 'Velocity',
-    Mode = 'Toggle',
-    Callback = function(state)
-        if game:GetService("UserInputService"):GetFocusedTextBox() then return end
-        if getgenv().walkSpeedEnabled then getgenv().walkSpeedKeybindActive = state end
-    end,
-})
-
-uhhh:AddToggle('JumpPowerToggle', {
-    Text = 'JumpPower',
-    Default = false,
-    Callback = function(state)
-        getgenv().jumpPowerEnabled = state
-    end,
-})
-
-uhhh:AddSlider('WalkSpeedSlider', {
-    Text = 'WalkSpeed',
-    Default = 16,
-    Min = 16,
-    Max = 500,
-    Rounding = 0,
-    Callback = function(value)
-        getgenv().walkSpeed = value
-    end,
-})
-
-uhhh:AddSlider('JumpPowerSlider', {
-    Text = 'JumpPower',
-    Default = 50,
-    Min = 50,
-    Max = 500,
-    Rounding = 0,
-    Callback = function(value)
-        getgenv().jumpPower = value
     end,
 })
 
