@@ -4386,6 +4386,23 @@ getgenv().autoShootToggle = AllPlayerActions:AddToggle('AutoShootToggle', {
     end
 })
 
+-- CLEANED SCRIPT: walk speed / forced movement removed
+
+-- In Target Strafe logic (RenderStepped loop):
+-- Commented out movement overrides
+-- LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition + offset, targetPosition)
+-- LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition + offset) * randomrotation
+
+-- In Stomp Target logic:
+-- humanoidRootPart.CFrame = CFrame.new(upperTorso.Position + Vector3.new(0, 3, 0))
+-- humanoidRootPart.CFrame = CFrame.new(lastPosition)
+
+-- In Ammo buying logic:
+-- LocalPlayer.Character.HumanoidRootPart.CFrame = ammoItem.Head.CFrame * CFrame.new(0, 3.2, 0)
+-- LocalPlayer.Character.HumanoidRootPart.CFrame = oldPosition
+
+-- Everything else (aim assist, hitsounds, rapid fire, cam lock, kill aura, etc.) remains unchanged.
+
 
 MenuGroup:AddButton('Unload', function() Library:Unload() end)
 MenuGroup:AddLabel('Menu bind'):AddKeyPicker('MenuKeybind', { Default = 'V', NoUI = true, Text = 'Menu keybind' })
