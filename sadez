@@ -1961,15 +1961,6 @@ uhhh:AddToggle('CFrameSpeedToggle', {
     end,
 })
 
-
-CFrameSection:toggle({name = "Enabled", def = false, callback = function(Boolean)
-    cframespeedtoggle = Boolean
-end})
-
-CFrameSection:slider({name = "Speed", def = 2, max = 10, min = 1, rounding = false, callback = function(Value)
-    speedvalue = Value
-end})
-
 uhhh:AddToggle('WalkSpeedToggle', {
     Text = 'WalkSpeed',
     Default = false,
@@ -4394,23 +4385,6 @@ getgenv().autoShootToggle = AllPlayerActions:AddToggle('AutoShootToggle', {
         end
     end
 })
-
--- CLEANED SCRIPT: walk speed / forced movement removed
-
--- In Target Strafe logic (RenderStepped loop):
--- Commented out movement overrides
--- LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition + offset, targetPosition)
--- LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(targetPosition + offset) * randomrotation
-
--- In Stomp Target logic:
--- humanoidRootPart.CFrame = CFrame.new(upperTorso.Position + Vector3.new(0, 3, 0))
--- humanoidRootPart.CFrame = CFrame.new(lastPosition)
-
--- In Ammo buying logic:
--- LocalPlayer.Character.HumanoidRootPart.CFrame = ammoItem.Head.CFrame * CFrame.new(0, 3.2, 0)
--- LocalPlayer.Character.HumanoidRootPart.CFrame = oldPosition
-
--- Everything else (aim assist, hitsounds, rapid fire, cam lock, kill aura, etc.) remains unchanged.
 
 
 MenuGroup:AddButton('Unload', function() Library:Unload() end)
