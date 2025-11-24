@@ -1961,6 +1961,15 @@ uhhh:AddToggle('CFrameSpeedToggle', {
     end,
 })
 
+
+CFrameSection:toggle({name = "Enabled", def = false, callback = function(Boolean)
+    cframespeedtoggle = Boolean
+end})
+
+CFrameSection:slider({name = "Speed", def = 2, max = 10, min = 1, rounding = false, callback = function(Value)
+    speedvalue = Value
+end})
+
 uhhh:AddToggle('WalkSpeedToggle', {
     Text = 'WalkSpeed',
     Default = false,
